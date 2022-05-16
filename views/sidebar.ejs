@@ -1,0 +1,131 @@
+<% if(locals.user) { %>
+    <a id="show-sidebar" class="btn btn-sm btn-dark">
+        <i class="fas fa-bars fa-2x"></i>
+    </a>
+    <nav id="sidebar" class="sidebar-wrapper">
+        <div class="sidebar-content">
+            <div class="sidebar-brand">
+                <a href="<%= locals.user.role === 'admin' ? '/admin/dashboard' : '/courses' %>">
+                    <h4><i class=" fad fa-users-class"></i> V-Classroom</h4>
+                </a>
+                <div id="close-sidebar">
+                    <i class="fas fa-arrow-circle-left"></i>
+                </div>
+            </div>
+            <div class="sidebar-header">
+                <div class="user-pic">
+                    <a href="/images/users/<%=locals.user.photo%>"><img class="img-responsive img-rounded"
+                            src="/images/users/<%=locals.user.photo%>" alt="photo of <%=locals.user.firstName%>"></a>
+                </div>
+                <div class="user-info">
+                    <span class="user-name" data-toggle="tooltip" data-placement="bottom"
+                        title="<%=locals.user.firstName +' '+ locals.user.lastName %>" href="#">
+                        <%if(locals.user.firstName.length>=5){%>
+                            <%=locals.user.firstName[0].toUpperCase()%>
+                                <%}else{%>
+                                    <%=locals.user.firstName.toUpperCase()%>
+                                        <%}%>
+                                            <strong>
+                                                <%=locals.user.lastName.toUpperCase()%>
+                                            </strong>
+                    </span>
+                    <span class="user-role">
+                        <%=locals.user.role.toUpperCase()%>
+                    </span>
+                </div>
+            </div>
+            <% if(locals.user.role === 'admin' ) { %>
+                                        <div class="sidebar-menu">
+                                            <ul>
+                                                <li>
+                                                    <a href="/admin/dashboard">
+                                                        <i class="fa fa-tachometer-alt"></i>
+                                                        <span>Dashboard</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/myProfile">
+                                                        <i class="fa fa-user"></i>
+                                                        <span>Profile</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/admin/users">
+                                                        <i class="fas fa-users"></i>
+                                                        <span>Users</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/admin/courses">
+                                                        <i class="fas fa-books"></i>
+                                                        <span>Courses</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <% } else {%>
+                                            <div class="sidebar-menu">
+                                                <ul>
+                                                    <li class="header-menu">
+                                                        <span>General</span>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/myProfile">
+                                                            <i class="fa fa-user"></i>
+                                                            <span>Profile</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="header-menu">
+                                                        <span>Instructor</span>
+                                                    </li>
+                                                    <%if(locals.user.coursesAsInstructor) {%>
+                                                        <%locals.user.coursesAsInstructor.forEach(function(course){%>
+                                                            <li>
+                                                                <a href="/course/<%=course._id%>">
+                                                                    <i class="fa fa-book"></i>
+                                                                    <span>
+                                                                        <% if(course.title.split(" ").length>=3){
+                                                                                let title=[];
+                                                                                let a=course.title.split(" ");
+                                                                            a.forEach(function(e){
+                                                                                title.push(e[0]);
+                                                                            })
+                                                                            let newTitle=title.join("");%>
+                                                                            <%=newTitle.toUpperCase()%>
+                                                                        <%} else{%>
+                                                                            <%=course.title%>
+                                                                        <%}%>
+                                                                    </span>
+                                                                 </a>
+                                                            </li>
+                                                    <%})} %>
+                                                            <li class=" header-menu">
+                                                                            <span>Student</span>
+                                                            </li>
+                                                            <%if(locals.user.coursesAsStudent) {%>
+                                                                <%locals.user.coursesAsStudent.forEach(function(course){%>
+                                                                    <li>
+                                                                        <a href="/course/<%=course._id%>">
+                                                                            <i class="fa fa-book"></i>
+                                                                            <span>
+                                                                                <% if(course.title.split(" ").length>=3){
+                                                                let title=[];
+                                                                let a=course.title.split(" ");
+                                                                a.forEach(function(e){
+                                                                    title.push(e[0]);
+                                                                })
+                                                                let newTitle=title.join("");%>
+                                                                <%=newTitle.toUpperCase()%>
+                                                                <%} else{%>
+                                                                <%=course.title%>
+                                                                <%}%>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                <%})} %>
+                                            </ul>
+                                        </div>
+                                <% }%>
+                    </div>
+            </nav>
+    <% }%>

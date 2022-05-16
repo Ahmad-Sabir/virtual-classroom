@@ -1,0 +1,224 @@
+<!-- include head -->
+<%- include('../head'); %>
+    <!-- include header -->
+    <%- include('../header'); %>
+        <div class="page-wrapper chiller-theme">
+            <%- include('../sidebar'); %>
+                <!-- sidebar-wrapper  -->
+                <main class="page-content">
+                    <div class="container">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="text-white form-title" style="margin-left:5px">
+                                <%=title%>
+                            </h3>
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-secondary fas fa-plus fa-2x" data-toggle="dropdown"
+                                    data-placement="left" title="Create/Join Course" href="dropdown-menu">
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a type="button" class="dropdown-item" data-toggle="modal"
+                                        data-target="#createModal">Create Course</a>
+                                    <a type="button" class="dropdown-item" data-toggle="modal"
+                                        data-target="#joinModal">Join Course</a>
+                                </div>
+                            </div>
+                        </div>
+                        <%if(courseAsInstructor.length>0 || enrolledIn.length>0) {%>
+                            <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 ">
+                                <%courseAsInstructor.forEach(function(c){ %>
+                                    <div class="col mb-4">
+                                        <div class="card shadow border-left-primary py-2" style="height:280px;">
+                                            <div class="card-body">
+
+                                                <h4 class="card-title lead">
+                                                    <a data-toggle="tooltip" data-placement="bottom"
+                                                        title="<%=c.title%>" href="/course/<%=c._id%>"
+                                                        style="color: black; font-weight: bold">
+                                                       <% if(c.title.split(" ").length>=3){
+                                                                    let title=[];
+                                                                    let a=c.title.split(" ");
+                                                                    a.forEach(function(e){
+                                                                        title.push(e[0]);
+                                                                    })
+                                                                    let newTitle=title.join("");%>
+                                                                    <%=newTitle.toUpperCase()%>
+                                                                <%} else{%>
+                                                                    <%=c.title%>
+                                                                <%}%>
+                                                    </a>
+                                                </h4>
+
+                                                <hr>
+                                                <small class="text-muted cat">
+                                                    <a data-toggle="tooltip" data-placement="top"
+                                                        title="Course Instructor" href="#">
+                                                        <img class="user-nav-img"
+                                                            src="/images/users/<%=c.instructor.photo%>"
+                                                            >
+                                                        <%=c.instructor.firstName +" "+ c.instructor.lastName%>
+                                                    </a>
+                                                    <a>
+                                                        <i class=" fas fa-users fa-lg text-info ml-4 mr-0"></i>
+                                                            <%=c.students.length%>
+                                                    </a>
+
+                                                </small>
+                                                <a href="/course/<%=c._id%>" class="btn btn-info mt-2">Enter
+                                                    Course</a>
+                                            </div>
+                                            <div
+                                                class="card-footer text-muted d-flex justify-content-between bg-transparent border-top-1">
+                                                <div class="view">
+                                                    <%=new Date(c.createdAt).toDateString()%>
+                                                </div>
+                                                <div class="dropdown">
+                                                    <i class="fal fa-ellipsis-h fa-2x" data-toggle="dropdown"
+                                                        style="cursor:pointer">
+                                                    </i>
+                                                    <div class="dropdown-menu">
+                                                        <button type="button" class="dropdown-item"
+                                                            onclick="window.deleteCourse('<%=c._id%>')">Delete
+                                                            Course</button>
+                                                        <a href="#" class="dropdown-item disabled">Report</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% }); %>
+                                        <%enrolledIn.forEach(function(c){ %>
+                                            <div class="col mb-4">
+                                                <div class="card card shadow border-left-danger py-2" style="height:280px;">
+                                                    <div class="card-body">
+                                                        <h4 class="card-title">
+                                                            <a data-toggle="tooltip" data-placement="bottom"
+                                                                title="<%=c.title%>" href="/course/<%=c._id%>"
+                                                                style="color: black; font-weight: bold">
+                                                                <% if(c.title.split(" ").length>=3){
+                                                                    let title=[];
+                                                                    let a=c.title.split(" ");
+                                                                    a.forEach(function(e){
+                                                                        title.push(e[0]);
+                                                                    })
+                                                                    let newTitle=title.join("");%>
+                                                                    <%=newTitle.toUpperCase()%>
+                                                                <%} else{%>
+                                                                    <%=c.title%>
+                                                                <%}%>
+                                                            </a>
+                                                        </h4>
+                                                        <hr>
+                                                        <small class=" text-muted cat">
+                                                                    <a data-toggle="tooltip" data-placement="top"
+                                                                        title="Course Instructor" href="#">
+                                                                        <img class="user-nav-img"
+                                                                            src="/images/users/<%=c.instructor.photo%>"
+                                                                            alt="photo of <%=c.instructor.firstName%>">
+                                                                        <%=c.instructor.firstName +" "+ c.instructor.lastName%>
+                                                            </a>
+                                                            <a>
+                                                                <i class=" fas fa-users fa-lg text-info ml-3"></i>
+                                                                            <%=c.students.length%>
+                                                                    </a>
+
+                                                                    </small>
+                                                                    <a href="/course/<%=c._id%>"
+                                                                        class="btn btn-info mt-2">Enter
+                                                                        Course</a>
+                                                    </div>
+                                                    <div
+                                                        class="card-footer text-muted d-flex justify-content-between bg-transparent border-top-1">
+                                                        <div class="view">
+                                                            <%=new Date(c.createdAt).toDateString()%>
+                                                        </div>
+                                                        <div class="dropdown">
+                                                            <i class="fal fa-ellipsis-h fa-2x" data-toggle="dropdown"
+                                                                style="cursor:pointer">
+                                                            </i>
+                                                            <div class="dropdown-menu">
+                                                                <a type="button" class="dropdown-item"
+                                                                    onclick="window.leaveCourse('<%=c.classCode%>')">Leave
+                                                                    Course</a>
+                                                                <a href="#" class="dropdown-item disabled">Report</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% }); %>
+                            </div>
+                            <%}else{%> 
+                                <div class="card-body">
+                            <span style="color: rgb(245, 237, 237); margin:auto;">
+                                Nothing To show
+                            </span>
+                        </div>
+                            <%}%>
+                    </div>
+                </main>
+                <!-- page-content" -->
+        </div>
+
+        <!-- Join Course Modal -->
+        <div class="modal fade" id="joinModal">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content animate">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Join Course</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form class="form_course_join">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="joinCode" placeholder="Class Code"
+                                    name="joinCode" required>
+                                <div class="valid-feedback">Valid.</div>
+                                <div class="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Join</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--create Modal -->
+        <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Create Course</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form_course_create">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="courseTitle" name="courseTitle"
+                                    placeholder="Course Title" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" rows="5" id="courseDescription"
+                                    placeholder="Course Description" required></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Discard</button>
+                                <button type="submit" class="btn btn-primary">Create</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <%- include('../footer'); %>

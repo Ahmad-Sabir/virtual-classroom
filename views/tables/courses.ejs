@@ -1,0 +1,57 @@
+<!-- include head -->
+<%- include('head'); %>
+    <!-- include header -->
+    <%- include('header'); %>
+        <div class="page-wrapper chiller-theme">
+            <%- include('sidebar'); %>
+                <!-- sidebar-wrapper  -->
+                <main class="page-content text-white">
+                    <div class="admin">
+                        <div class="page-data">
+                            <div class="container-fluid tbl">
+                                <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                                    <h3 class="text-white mb-0">Courses</h3>
+                                </div>
+                                <br>
+                                <table id="example" class="table table-dark text-white table-hover" cellspacing="0"
+                                    width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Course Title</th>
+                                            <th>Instructor Name</th>
+                                            <th>Instructor Email</th>
+                                            <th>Students</th>
+                                            <th>Created On</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% courses.forEach(function(course){ %>
+                                            <tr>
+                                                <td>
+                                                    <%= course.title %>
+                                                </td>
+                                                <td>
+                                                    <%=course.instructor.firstName + ' ' + course.instructor.lastName %>
+                                                </td>
+                                                <td>
+                                                    <%=course.instructor.email%>
+                                                </td>
+                                                <td>
+                                                    <%=course.students.length%>
+                                                </td>
+                                                <td>
+                                                    <%=new Date(course.createdAt).toLocaleDateString()%>
+                                                </td>
+                                            </tr>
+                                            <% }); %>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <!-- page-content" -->
+        </div>
+        <%- include('footer'); %>

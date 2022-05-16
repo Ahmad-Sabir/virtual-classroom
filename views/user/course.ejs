@@ -1,0 +1,370 @@
+<!-- include head -->
+<%- include('../head'); %>
+    <style>
+        /* Style the tab */
+        body {
+            background-color: #2c2b2b;
+        }
+
+        .tab {
+            float: left;
+            width: 20%;
+            height: 87vh;
+            overflow-y: scroll;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 200;
+            color: #e1ffff;
+            background-color: #343a40;
+            position: sticky;
+            border-right: 1px solid black;
+        }
+
+        /* Style the buttons inside the tab */
+        .tab a {
+            display: block;
+            background-color: #343a40;
+            color: white;
+            width: 100%;
+            border: 1px solid black;
+            outline: none;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 15px;
+            list-style: none;
+            line-height: 30px;
+            cursor: pointer;
+            padding: 5px 15px 5px 15px;
+            border-right: none;
+
+        }
+
+        @media screen and (max-width: 830px) {
+
+            .tab a span,
+            .tab h5 span {
+                display: none;
+            }
+
+            .tab a,
+            .tab h5 {
+                text-align: center;
+            }
+
+            .tabcontent a span {
+                display: none;
+            }
+
+            button span {
+                display: none;
+            }
+        }
+
+        .tab h5 {
+            margin: 0 auto !important;
+            padding: 15px 0px 15px 0px;
+            text-align: center;
+            position: sticky;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab a:hover {
+            border-left: 3px solid #d19b3d;
+            background-color: #4f5b69;
+            -webkit-transition: all 1s ease;
+            -moz-transition: all 1s ease;
+            -o-transition: all 1s ease;
+            -ms-transition: all 1s ease;
+            transition: all 1s ease;
+        }
+
+        /* Create an active/current "tab button" class */
+        .tab a.active {
+            border-left: 3px solid #d19b3d;
+            background-color: #4f5b69;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            float: left;
+            padding: 0px 12px;
+            width: 80%;
+            border-left: none;
+            height: 87vh;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            background-color: #343a40;
+            border-radius: 3px;
+
+        }
+
+        .tabcontent .h5 {
+            padding: 7px 2px 10px 2px;
+            color: white;
+            background-color: inherit;
+            font-size: 28px;
+            z-index: 2;
+        }
+
+        .tabcontent .participants,
+        .tabcontent .meeting,
+        .tabcontent .assignment,
+        .tabcontent .general {
+            right: 50px;
+            top: 75px;
+            position: absolute;
+            z-index: 3;
+        }
+    </style>
+    <!-- include header -->
+    <%- include('../header'); %>
+        <script>
+            let user = {}
+            user.userId = '<%= locals.user._id %>'
+            user.userName = '<%= locals.user.firstName +" "+ locals.user.lastName %>'
+            user.photo = '<%= locals.user.photo %>'
+            const courseId = `<%= currentCourse._id %>`
+            const classCode = `<%= currentCourse.classCode %>`
+        </script>
+        <div class="page-wrapper chiller-theme">
+            <%- include('../sidebar'); %>
+                <!-- sidebar-wrapper  -->
+                <main class="page-content">
+                    <div class="container-fluid" style="margin-top:-20px;">
+                        <div class="tab">
+                            <h5 style="padding:10px;"><i class="fal fa-users-class fa-lg"></i> <span>
+                                    <%=currentCourse.title%>
+                                </span></h5>
+                            <a class="tablinks" href="#general" onclick="openTab(event, 'General')" id="#general"><i
+                                    class='far fa-dot-circle fa-lg '></i> <span>General</span></a>
+                            <a class="tablinks" href="#assignments" onclick="openTab(event, 'Assignment')"
+                                id="#assignments"><i class='far fa-clipboard fa-lg'></i><span> Assignment</span></a>
+                            <%if(!currentCourse.instructor._id.equals(locals.user._id)){%>
+                            <a class="tablinks" href="#submissions" onclick="openTab(event, 'Submission')" id="#submissions"><i
+                                    class='far fa-clipboard fa-lg'></i><span> Submission</span></a>
+                                <%}%>    
+                            <a class="tablinks" href="#chat" onclick="openTab(event, 'Chat')" id="#chat"><i
+                                    class='fad fa-comments-alt fa-lg'></i> <span>Chat</span></a>
+                            <a class="tablinks" href="#meetings" onclick="openTab(event, 'Meeting')" id="#meetings"><i
+                                    class='fas fa-video fa-lg'></i>
+                                <span>Meeting</span></a>
+                            <a class="tablinks" href="#participants" onclick="openTab(event, 'Participants')"
+                                id="#participants"><i class='fa fa-users fa-lg'></i> <span>Participants</span></a>
+                            <%if(currentCourse.instructor._id.equals(locals.user._id)){%>
+                                <a class="tablinks" href="#settings" onclick="openTab(event, 'Setting')"
+                                    id="#settings"><i class='far fa-cog fa-lg'></i>
+                                    <span>Settings</span></a>
+                                <%}%>
+
+                        </div>
+
+                        <div id="General" class="tabcontent">
+                            <h5 class="h5 w-100 fixed-top mr-3" style="position:sticky;"><i
+                                    class='far fa-dot-circle'></i> General</h5>
+                            <%if(currentCourse.instructor._id.equals(locals.user._id)){%>
+                                <button type="button" class="btn btn-primary dropdown dropdown-toggle general"
+                                    type="button" data-toggle="dropdown"><i class="fas fa-upload"></i>&nbsp<span>Upload
+                                        Files</span></button>
+                                <ul class="dropdown-menu bg-dark text-white">
+                                    <input type="file" accept="*" name="generalfile" id="generalfile"
+                                        style="border:none" multiple>
+                                </ul>
+                                <%}%>
+                                    <%- include('gerenal'); %>
+                        </div>
+
+                        <div id="Assignment" class="tabcontent">
+                            <h5 class="h5 w-100 fixed-top mr-3" style="position: sticky;"><i
+                                    class='far fa-clipboard'></i> Assignments
+                            </h5>
+                            <%if(currentCourse.instructor._id.equals(locals.user._id)){%>
+                                <button type="button" class="btn btn-primary assignment" data-toggle="modal"
+                                    data-target="#assignmentModal"><i class="fas fa-plus"></i>&nbsp<span>Create
+                                        Assignment</span></button>
+                                <%}%>
+
+                                    <%- include('assignments'); %>
+                        </div>
+                        <div id="Submission" class="tabcontent">
+                            <h5 class="h5 w-100 fixed-top mr-3" style="position: sticky;"><i class='fas fa-check-circle'></i> Submissions
+                            </h5>
+                                    <%- include('submissions'); %>
+                        </div>
+                        <div id="Chat" class="tabcontent">
+                            <%- include('chat'); %>
+                        </div>
+                        <div id="Meeting" class="tabcontent">
+                            <h4 class="h5 w-100 fixed-top mr-3" style="position: sticky;"><i class='fas fa-video'></i>
+                                Meetings</h4>
+                            <%if(currentCourse.instructor._id.equals(locals.user._id)){%>
+                                <button type="button" class="btn btn-primary meeting" data-toggle="modal"
+                                    data-target="#meetingModal"><i class="fas fa-calendar"></i>&nbsp<span>Schedule
+                                        Meeting</span></button>
+                                <%}%>
+                                    <%- include('meetings'); %>
+                        </div>
+                        <div id="Participants" class="tabcontent">
+                            <h5 class="h5 w-100 fixed-top mr-3" style="position: sticky;"><i class='fa fa-users'></i>
+                                Participants</h5>
+                            <%if(currentCourse.instructor._id.equals(locals.user._id)){%>
+                                <button type="button" class="btn btn-primary participants" data-toggle="modal"
+                                    data-target="#participantModal">
+                                    <i class="fas fa-user-plus"></i>&nbsp<span>Add Participants</span>
+                                </button>
+                                <%}%>
+                                    <%- include('participants'); %>
+                        </div>
+                        <div id="Setting" class="tabcontent">
+                            <h5 class="h5 w-100 fixed-top mr-3" style="position: sticky;"><i class='far fa-cog'></i>
+                                Settings</h5>
+                            <div class='col-lg-10 col-md-10 col-xl-10 col-sm-12 justify-content-between'
+                                style="margin:0 auto">
+                                <%- include('settings'); %>
+                            </div>
+
+                        </div>
+                    </div>
+                </main>
+        </div>
+        <!-- //////////////////////////Assignment Modal///////////////////////////////////  -->
+        <div class="modal fade" id="assignmentModal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+                <div class="modal-content" style="border: none">
+                    <div class="modal-header bg-dark text-white" style="border-bottom:1px solid black">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Create Assignment</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body bg-dark text-white">
+                        <div class="d-flex align-items-center  justify-content-center">
+
+                            <div class="container rounded">
+                                <form class='form_create_assignment'>
+                                    <div class="form-group ">
+                                        <input type="text " class="form-control" id="assTitle"
+                                            placeholder="Enter title ">
+                                    </div>
+                                    <div class="form-group ">
+                                        <input type="text " class="form-control " id="instruction"
+                                            placeholder="Enter instruction ">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="file" accept="*" name='assignments' id="assignments"
+                                            style="border:none; margin-left:-30px" multiple>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 ">
+                                            <input type="text" class="form-control" id='points' placeholder="Points">
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="datetime-local" class="form-control" id='dueDate'
+                                                placeholder="Due Date... ">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="modal-footer bg-dark text-white" style="border-top:1px solid black">
+                                        <button type="submit" class="btn btn-primary">Create</button>
+                                        <button type="button" class="btn btn-danger"
+                                            data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- ////////////////////////////////////////////////////////////////////////////////////// -->
+        <!-- ////////////////////////////////////Meeting Modal////////////////////////////////////////////////// -->
+        <div class="modal fade" id="meetingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+                <div class="modal-content" style="border: none">
+                    <div class="modal-header bg-dark text-white" style="border-bottom:1px solid black">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Schedule Meeting</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body bg-dark text-white">
+                        <div class="justify-content-center">
+                            <form class='meetingForm'>
+                                <div class="form-group ">
+                                    <input type="text" class="form-control" id="mTitle" placeholder="Enter title"
+                                        required>
+                                </div>
+                                <div class="row" style="padding-bottom: 10px; padding-top: 10px; ">
+                                    <div class="col">
+                                        <input type="datetime-local" class="form-control" id='dueDateMeeting'
+                                            placeholder="Due Date... " required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer bg-dark text-white" style="border-top:1px solid black">
+                                    <button type="submit" class="btn btn-primary">Schedule</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- /////////////////add participants///////////////////////////////////////////////////// -->
+        <div class="modal fade" id="participantModal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+                <div class="modal-content" style="border: none">
+                    <div class="modal-header bg-dark text-white" style="border-bottom:1px solid black">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Adding Participants</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body bg-dark text-white">
+                        <div class="justify-content-center">
+                            <form class='participantForm'>
+                                <div class="form-group ">
+                                    <input type="email" class="form-control" id="addEmail" placeholder="Enter Email "
+                                        required>
+                                </div>
+                                <div class="modal-footer bg-dark text-white" style="border-top:1px solid black">
+                                    <button type="submit" class="btn btn-primary">Add</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- ////////////////////////////////////////////////////////////////////////////////////// -->
+        <%- include('../footer'); %>
+            <script>
+                function openTab(evt, cityName) {
+                    var i, tabcontent, tablinks;
+                    tabcontent = document.getElementsByClassName("tabcontent");
+                    for (i = 0; i < tabcontent.length; i++) {
+                        tabcontent[i].style.display = "none";
+                    }
+                    tablinks = document.getElementsByClassName("tablinks");
+                    for (i = 0; i < tablinks.length; i++) {
+                        tablinks[i].className = tablinks[i].className.replace(" active", "");
+                    }
+                    document.getElementById(cityName).style.display = "block";
+                    evt.currentTarget.className += " active";
+                }
+                if (document.location.hash) {
+                    document.getElementById(document.location.hash).click();
+                }
+                else {
+                    document.getElementById("#general").click();
+                }
+                // Get the element with id="defaultOpen" and click on it
+
+            </script>

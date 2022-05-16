@@ -1,0 +1,179 @@
+<!-- include head -->
+<%- include('head'); %>
+    <!-- include header -->
+    <%- include('header'); %>
+        <div class="page-wrapper chiller-theme">
+            <%- include('sidebar'); %>
+                <!-- sidebar-wrapper  -->
+                <main class="page-content text-white">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-sm-10">
+                            <ul class="nav nav-tabs justify-content-center align-items-center"
+                                style='border-color: #2c2b2b;'>
+                                <li class="nav-item"><a data-toggle="tab"
+                                        class='nav-link active bg-dark text-white border-white' href="#profile"><i
+                                            class="fas fa-user-cog"></i> Update
+                                        Profile</a></li>
+                                <li class="nav-item"><a data-toggle="tab"
+                                        class='nav-link bg-dark text-white border-white' href="#password"><i
+                                            class="fas fa-lock-alt"></i> Update
+                                        Password</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="profile">
+                                    <div class='row justify-content-center align-items-center text-white'
+                                        style='background-color: #2c2b2b;'>
+                                        <div class="col-sm-10 containerr shadow" style="padding:50px 50px;">
+                                            <form class='form-update-data'>
+                                                <div class="col-sm-12 justify-content-center align-items-center">
+                                                    <div class="text-center">
+                                                        <div class="form-group form__photo-upload">
+                                                            <img src="/images/users/<%=locals.user.photo%>"
+                                                                class="rounded" alt="avatar" id='avatar'
+                                                                style="width:155px; height:150px">
+                                                            <input class="form__upload" type="file" accept="image/*"
+                                                                id="photo" name="photo">
+                                                            <label for='photo' type="button" class="btn btn-primary"
+                                                                style="position: relative;margin:0px; width:155px;height:34px;font-size:13px;">Choose
+                                                                New</label>
+                                                        </div>
+                                                    </div>
+                                                    <hr><br>
+                                                    <div class='row'>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="fname"><i class="fa fa-user"></i></label>
+                                                                <input type="text" name="fname" id="fname"
+                                                                    placeholder="First Name"
+                                                                    value='<%=locals.user.firstName%>' required />
+                                                            </div>
+                                                        </div>
+                                                        <br><br>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="lname"><i class="fa fa-user"></i></label>
+                                                                <input type="text" name="lname" id="lname"
+                                                                    placeholder="Last Name"
+                                                                    value='<%=locals.user.lastName%>' required />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <div class='row'>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="email"><i
+                                                                        class="fa fa-envelope"></i></label>
+                                                                <input type="email" name="email" id="email"
+                                                                    placeholder="Email" value='<%=locals.user.email%>'
+                                                                    disabled required />
+                                                            </div>
+                                                        </div>
+                                                        <br><br>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="mobile"><i class="fa fa-mobile"></i></label>
+                                                                <input type="number" name="mobile" id="mobile"
+                                                                    placeholder="Mobile (optional)"
+                                                                    value="<%= locals.user.mobile ? locals.user.mobile:'';%>" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <div class='row'>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="dob"><i
+                                                                        class="fas fa-calendar-alt"></i></label>
+                                                                <input placeholder="Date of Birth(optional)" type="text"
+                                                                    onfocus="(this.type='date')" name="dob" id="dob"
+                                                                    value="<%= locals.user.dob ? new Date(locals.user.dob).toLocaleDateString():'';%>" />
+                                                            </div>
+                                                        </div>
+                                                        <br><br>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="location"><i
+                                                                        class="fal fa-location"></i></label>
+                                                                <input type="text" name="location" id="location"
+                                                                    placeholder="Country(optional)" list='countryName'
+                                                                    pattern="Pakistan|India|Bangladesh|Iran|Iraq|Italy|United States|England|Germany|France"
+                                                                    value="<%= locals.user.location ? locals.user.location:'';%>" />
+                                                                <datalist id="countryName">
+                                                                    <option value="Pakistan">
+                                                                    <option value="India">
+                                                                    <option value="Bangladesh">
+                                                                    <option value="Iran">
+                                                                    <option value="Iraq">
+                                                                    <option value="Italy">
+                                                                    <option value="United States">
+                                                                    <option value="England">
+                                                                    <option value="Germany">
+                                                                    <option value="France">
+                                                                </datalist>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <div class='row'>
+                                                        <div class="col-sm-12">
+                                                            <div class="form-group">
+                                                                <br>
+                                                                <button class="btn btn-lg btn-success" type="submit">
+                                                                    Update Data</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--/tab-pane-->
+                            <div class="tab-pane" id="password">
+                                <div class="password-manage text-white" style='background-color: #2c2b2b;'>
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="card shadow" style="width:400px;border-radius:20px">
+                                            <div class="card-body">
+                                                <h2 class="form-title">Update Password</h2>
+                                                <hr>
+                                                <form class="form-update-password">
+                                                    <div class="form-group">
+                                                        <label for="cr-pass"><i class="fa fa-lock"></i></label>
+                                                        <input type="password" name="cr-pass" id="cr-pass"
+                                                            placeholder="Current Password" required />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="pass"><i class="fa fa-lock"></i></label>
+                                                        <input type="password" name="pass" id="pass"
+                                                            placeholder="New Password" required />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="re-pass"><i class="fa fa-lock-alt"></i></label>
+                                                        <input type="password" name="re_pass" id="re_pass"
+                                                            placeholder="Repeat New password" required />
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn btn-success btn-block">
+                                                            Update Password
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!--/tab-pane-->
+                            </div>
+
+                            <!--/col-9-->
+                        </div>
+                    </div>
+                    <!--/row-->
+                </main>
+                <!-- page-content" -->
+        </div>
+        <%- include('footer'); %>

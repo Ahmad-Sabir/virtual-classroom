@@ -1,0 +1,53 @@
+<style>
+    .class-code button {
+        font-size: 36px;
+        border: none;
+    }
+
+    @media screen and (max-width: 830px) {
+        .class-code button {
+            font-size: 20px;
+            border: none;
+        }
+    }
+</style>
+<div class="card text-white bg-dark mb-3 pb-3">
+    <div class="card-header">Course Code</div>
+    <div class="card-body">
+        <div class="class-code text-center">
+            <button id="p1" class="btn btn-primary p-2 text-white rounded" data-toggle="tooltip" data-placement="top"
+                title="Copy To ClipBoard" onclick="copyToClipboard('#p1')">
+                <%=currentCourse.classCode%>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="card text-white bg-dark mb-3 pb-3">
+    <div class="card-header">Course Details</div>
+    <div class="card-body">
+        <form class="form_course_update">
+            <div class="form-group">
+                <b>Course Title</b>
+                <input type="text" class="form-control" id="courseTitle" name="courseTitle"
+                    value="<%=currentCourse.title%>" placeholder="Course Title" required>
+            </div>
+            <div class="form-group">
+                <b>Description</b>
+                <textarea class="form-control" rows="3" id="courseDescription" placeholder="Course Description"
+                    required><%=currentCourse.description%></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function copyToClipboard(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).text()).select();
+        document.execCommand("copy");
+        $("#cop").attr('title', $(element).text());
+        $temp.remove();
+    }
+</script>

@@ -1,0 +1,105 @@
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2">
+    <%if(currentCourse.meetings.length>0){%>
+        <%currentCourse.meetings.forEach(function(meeting){%>
+            <%if(meeting.status===false){%>
+            <div class="col mb-2">
+                <div class=" w-100 card  mb-3  mr-3 bg-dark text-white shadow">
+                    <div class="card-header">
+                        <%=meeting.title%>
+                        <%if(currentCourse.instructor._id.equals(locals.user._id)){%>
+                            <span class="dropdown">
+                                <i class="fal fa-ellipsis-v" style="float:right;cursor:pointer;" data-toggle="dropdown">
+                                </i>
+                                <span class="dropdown-menu">
+                                    <button type="button" class="dropdown-item" onclick="window.deleteMeeting('<%=meeting._id%>','<%=currentCourse._id%>')"">Delete Meeting</button>
+                                </span>
+                            </span>
+                        <%}%>
+                        </div>
+                    <div class="card-body">
+                        <span style="color: rgb(245, 237, 237);" data-toggle="tooltip" data-placement="bottom" title="<%=moment(new Date(meeting.meetingTime))%>">
+                            <%=moment(new Date(meeting.meetingTime)).fromNow()%>
+                        </span>
+                        </p>
+                        <%if(currentCourse.instructor._id.equals(locals.user._id)){%>
+                            <a href="<%=meeting.meetingLink%>" class="mt-1 btn btn-sm" target="_blank"
+                            style=" background-color: rgb(82, 82, 255);color: white;">Start meeting</a>
+                        <%}else{%>
+                            <a href="<%=meeting.meetingLink%>" class="mt-1 btn btn-sm" target="_blank"
+                            style=" background-color: rgb(82, 82, 255);color: white;">Join meeting</a>
+                        <%}%>
+                    </div>
+                </div>
+            </div>
+            <%}else{%>
+                <div class="col mb-2">
+                <div class=" w-100 card mb-3 mr-3 bg-dark text-white shadow">
+                    <div class="card-header">
+                        <%=meeting.title%> <i class="fas fa-check-circle" data-toggle="tooltip" data-placement="bottom" title="completed"></i>
+                        <%if(currentCourse.instructor._id.equals(locals.user._id)){%>
+                            <span class="dropdown">
+                                <i class="fal fa-ellipsis-v" style="float:right;cursor:pointer;" data-toggle="dropdown">
+                                </i>
+                                <span class="dropdown-menu">
+                                    <button type="button" class="dropdown-item" onclick="window.deleteMeeting('<%=meeting._id%>','<%=currentCourse._id%>')">Delete Meeting</button>
+                                </span>
+                            </span>
+                        <%}%>
+                        </div>
+                    <div class="card-body">
+                        <span style="color: rgb(245, 237, 237);" data-toggle="tooltip" data-placement="bottom" title="<%=moment(new Date(meeting.meetingTime))%>">
+                            <%=new Date(meeting.meetingTime).toDateString()%>
+                        </span>
+                        </p>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" style=" background-color: rgb(82, 82, 255);color: white;" data-toggle="dropdown">
+                                        <i class="fas fa-users"></i> Participants
+                                    </button>
+                                    <div class="dropdown-menu bg-dark">
+                                        <%meeting.participants.forEach(function(participant){%>
+                                            <a class="dropdown-item bg-dark text-white">
+                                                <img class="img-circle" src="/images/users/<%=participant.photo%>" style="width:30px;height:30px"> <%=participant.email%>
+                                            </a>
+                                            <%})%>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="dropdown">
+                                    <button type="button" class="btn dropdown-toggle" style=" background-color: rgb(82, 82, 255);color: white;"
+                                        data-toggle="dropdown">
+                                        <i class="fas fa-comment"></i> Chat
+                                    </button>
+                                    <div class="dropdown-menu bg-dark" style="width:300px; max-height:300px; overflow-y:scroll;">
+                                        <%meeting.chat.forEach(function(c){%>
+                                            <div class="msg left-msg ml-2">
+                                                <div class="msg-img" style="background-image: url('/images/users/<%=c.senderID.photo%>')"></div>
+                                                <div class="msg-bubble">
+                                                    <div class="msg-info">
+                                                        <div class="msg-info-name"><%=c.senderID.firstName%></div>
+                                                        <div class="msg-info-time"><%=moment(c.sentAt).calendar()%></div>
+                                                    </div>
+                                                    <div class="msg-text"><%=c.message%></div>
+                                                </div>
+                                            </div>
+                                            <%})%>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <%}%>
+            <%})%>
+                <%}else{%>
+                    <div class="card-body">
+                        <span style="color: rgb(245, 237, 237); margin:auto;">
+                            Nothing To show
+                        </span> 
+                    </div>
+                    
+                <%}%>
+</div>

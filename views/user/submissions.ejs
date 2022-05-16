@@ -1,0 +1,44 @@
+
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th>Assignment Title</th>
+            <th>submission Time</th>
+            <th>Status</th>
+            <th>Points</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if(currentCourse.assignments){%>
+            <%currentCourse.assignments.forEach(function(el){%>
+                <%el.submissions.forEach(function(sub){%>
+                   <%if(sub.submittedtedBy._id.equals(locals.user._id)){%>
+                <tr>
+                    <td>
+                        <%=el.title%>
+                    </td>
+                    <td>
+                    <%=new Date(sub.submittedAt).toDateString()%>
+                        <%=new Date(sub.submittedAt).toLocaleTimeString()%>
+                    </td>
+                    <%if(sub.submittedAt>el.dueDate){%>
+                        <td>Late</td>
+                        <%}else{%>
+                            <td>On Time</td>
+                            <%}%>
+                                <td>
+                                    <%=sub.points%>
+                                </td>
+                        <%if(!sub.points){%>
+                            <td><a type="button" class="btn btn-primary" onclick="window.deleteSubmission('<%=sub._id%>','<%=currentCourse._id%>')"><i class="far fa-trash-alt"></i></a></td>
+                        <%}%>     
+                </tr>
+                <%}%>
+                <%})%>
+                <%})%>
+                    <%}else{%>
+                        <h4>No Submissions Yet</h4>
+                        <%}%>
+    </tbody>
+</table>

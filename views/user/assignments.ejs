@@ -1,0 +1,73 @@
+<%
+ function durationAsString(end) {
+        const start = new Date();
+        const duration = moment.duration(moment(end).diff(moment(start)));
+
+        //Get Days
+        const days = Math.floor(duration.asDays()); // .asDays returns float but we are interested in full days only
+        const daysFormatted = days ? `${days}d ` : ''; // if no full days then do not display it at all
+
+        //Get Hours
+        const hours = duration.hours();
+        const hoursFormatted = `${hours}h `;
+
+        //Get Minutes
+        const minutes = duration.minutes();
+        const minutesFormatted = `${minutes}m`;
+
+        return [daysFormatted, hoursFormatted, minutesFormatted].join('');
+    }
+%>
+<div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3">
+    <% if(currentCourse.assignments.length>0){%>
+            <%currentCourse.assignments.forEach(function(el){%>
+                <div class="col mb-2">
+                    <div class=" w-100 card mr-3 bg-dark text-white shadow border-black">
+                        <h5 class="card-header">
+                            <%=el.title%> 
+                            <%if(currentCourse.instructor._id.equals(locals.user._id)){%>
+                            <span class="dropdown">
+                                <i class="fal fa-ellipsis-v" style="float:right;cursor:pointer;" data-toggle="dropdown">
+                                </i>
+                                <span class="dropdown-menu">
+                                    <button type="button" class="dropdown-item" 
+                                    onclick="window.deleteAssignment('<%=el._id%>','<%=currentCourse._id%>')">Delete Assignment</button>
+                                </span>
+                            </span>
+                            <%}%>
+                        </h5>
+                        <div class="card-body">
+                            <div class='row'>
+                                <div class="col-12 ">
+                                    <p class="card-title">
+                                        <span><i class="fas fa-clock"></i></span>
+                                        <span>
+                                            <%if(el.dueDate){%>
+                                                <%=durationAsString(el.dueDate)%>
+                                            <%}else{%>
+                                                No Due Date
+                                            <%}%>
+                                        </span>
+
+                                    </p>
+                                </div>
+                            </div>
+                            <!--  -->
+                            <%if(currentCourse.instructor._id.equals(locals.user._id)){%>
+                            <a href="/course/<%=currentCourse._id%>/assignments/<%=el._id%>/i"
+                                class="btn btn-primary btn-sm">view assignment</a>
+                                <%} else{%>
+                                    <a href="/course/<%=currentCourse._id%>/assignments/<%=el._id%>/s" class="btn btn-primary btn-sm">view assignment</a>
+                                <%}%>
+                        </div>
+                    </div>
+                </div>
+                <%})%>
+                    <%}else{%>
+                        <div class="card-body">
+                            <span style="color: rgb(245, 237, 237); margin:auto;">
+                                Nothing To show
+                            </span>
+                        </div>
+                        <%}%>
+</div>

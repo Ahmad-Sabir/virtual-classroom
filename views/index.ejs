@@ -1,0 +1,26 @@
+<!-- include head -->
+<%- include('head'); %>
+    <!-- include head -->
+    <%- include('header'); %>
+        <section class="landing">
+            <div class="dark-overlay">
+                <div class="landing-inner">
+                    <h1 class="x-large">Virtual Classroom</h1>
+                    <p class="lead">
+                        Create your account, start learning & teaching today, provides you an environment for
+                        collaboration
+                    </p>
+                    <% if(locals.user) { %>
+                        <a type="button" href="<%= locals.user.role === 'admin' ? '/admin/dashboard' : '/courses' %>"
+                            class="btn btn-primary">Dashboard</a>
+                        <% } else { %>
+                            <div class="buttons">
+                                <a type="button" href="/signup" class="btn btn-primary">Sign Up</a>
+                                <a type="button" href="/login" class="btn btn-light">Login</a>
+                            </div>
+                            <% } %>
+                </div>
+            </div>
+        </section>
+        <!-- include footer-->
+        <%- include('footer'); %>

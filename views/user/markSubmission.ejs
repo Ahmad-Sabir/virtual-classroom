@@ -1,0 +1,93 @@
+<!-- include head -->
+<%- include('../head'); %>
+    <!-- include header -->
+    <%- include('../header'); %>
+        <div class="page-wrapper chiller-theme" style="background-color: #2c2b2b;">
+            <%- include('../sidebar'); %>
+                <!-- sidebar-wrapper  -->
+                <main class="page-content">
+                    <div class="container bg-dark text-white"
+                        style="height:80vh;width:80vw;overflow-y:scroll;border-radius:5px;margin-top:0px;">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h3 style="margin-left:1px;">
+                                            <%=submission.assignmentId.title%>
+                                        </h3>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-9">
+                                        <div style="padding-top: 10px;margin-bottom: 20px;">
+                                            <h4 style="font-size: 16px;">Name</h4>
+                                            <span>
+                                                <%=submission.submittedtedBy.firstName%>&nbsp;
+                                                <%=submission.submittedtedBy.lastName%>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div style="padding-top: 10px;margin-bottom: 20px;">
+                                            <h4 style="font-size: 16px;">Email</h4>
+                                            <span>
+                                                <%=submission.submittedtedBy.email%>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-9">
+                                        <span style="font-size: 16px;">Submitted Files</span><br>
+                                        <%if(submission.files.length>0){%>
+                                            <%submission.files.forEach(function(file){%>
+                                                <a href="/files/assignmentFiles/<%=file%>"
+                                                    style="background-color: rgb(26, 28, 31);color: aliceblue; padding:2px;"
+                                                    download>
+                                                    <%=file%>&nbsp;<i class="far fa-download"></i>
+                                                </a>
+                                                <%})%>
+                                                    <%} else{%>
+                                                        <span>No files attached</span>
+                                                        <%}%>
+                                    </div>
+                                    <div class="col-3">
+                                        <h5 style="font-size: 16px;">Status</h5>
+                                        <%if(submission.submittedAt>submission.assignmentId.dueDate){%>
+                                            <span>Late Submission</span>
+                                            <%}else{%>
+                                                <span>On Time Submission</span>
+                                            <%}%>
+                                    </div>
+                                    <!--  -->
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-9">
+                                        <form class="formPoints">
+                                            <div class="form-group">
+                                                <input type="number" class="form-control" id="givenPoints"
+                                                    placeholder="Points" value="<%=submission.points%>" style="width:25%" required/>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Submit</button> 
+                                        </form>
+                                    </div>
+                                    <div class="col-3">
+                                        <h5 style="font-size: 16px;">TotalPoints</h5>
+                                        <%if(submission.assignmentId.totalPoints){%>
+                                            <p>
+                                                <%=submission.assignmentId.totalPoints%>
+                                            </p>
+                                            <%} else{%>
+                                                <p>No Points</p>
+                                            <%}%>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+        </div>
+        <!-- /////////////////////////////////////// -->
+        <%- include('../footer'); %>

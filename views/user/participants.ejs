@@ -1,0 +1,49 @@
+<style>
+    .img-user {
+        height: 50px;
+        width: 50px;
+        margin-right: 20px;
+    }
+
+    .user-item img,
+    .user-item h6,
+    .user-item i {
+        display: inline-block;
+    }
+
+    .user-item i {
+        float: right;
+        margin-top: 15px;
+        margin-bottom: auto;
+    }
+</style>
+<ul class="list-group ">
+    <li class="list-group-item user-item text-left bg-dark text-white">
+        <img class="rounded-circle img-user img-thumbnail " src="/images/users/<%=currentCourse.instructor.photo%>">
+        <h6>
+            <%=currentCourse.instructor.firstName + " " + currentCourse.instructor.lastName%><br>
+        </h6>
+        <h6 style="color:rgb(155, 155, 155);">
+            (Instructor)
+        </h6>
+    </li>
+    <%if(currentCourse.students.length>0){%>
+        <%currentCourse.students.forEach(function(student){%>
+            <li class="list-group-item user-item text-left bg-dark text-white">
+                <img class="rounded-circle img-user" src="/images/users/<%=student.photo%>">
+                <h6>
+                    <%=student.firstName + " " + student.lastName%><br>
+                </h6>
+                <h6 style="color:rgb(155, 155, 155);margin: auto;">
+                    (student)
+                </h6>
+                <%if(currentCourse.instructor._id.equals(locals.user._id)){%>
+                    <i type="button"
+                        onclick="window.removeParticipant('<%=student.email%>','<%=currentCourse._id%>','<%=currentCourse.classCode%>')"
+                        class="fas fa-user-minus fa-lg"></i>
+                    <%}%>
+
+            </li>
+            <%})%>
+                <%}%>
+</ul>

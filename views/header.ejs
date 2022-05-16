@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <h4>
+                <% if(!locals.user) {%><i class="fad fa-users-class"></i>
+                    <%} else{ }%> Virtual Classroom
+            </h4>
+        </a>
+        <ul class="navbar-nav">
+            <% if(locals.user) { %>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                        data-toggle="dropdown">
+                        <img class="user-nav-img" src="/images/users/<%=locals.user.photo%>"
+                            alt="photo of <%=locals.user.firstName%>">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="/myProfile"><i class="fas fa-user-circle fa-md"></i> Profile</a>
+                        <div class="dropdown-divider text-dark"></div>
+                        <a role="button" class="dropdown-item logout" style="cursor:pointer;"><i class="fas fa-sign-out-alt fa-md"></i> LogOut</a>
+                    </div>
+                </li>
+                <!-- <li>
+                    <a class="nav-link" data-toggle="tooltip" data-placement="bottom"
+                        title="<%=locals.user.firstName + ' ' + locals.user.lastName %>" href="#">
+                        <img class="user-nav-img" src="/images/users/<%=locals.user.photo%>"
+                            alt="photo of <%=locals.user.firstName%>">
+                        
+                    </a>
+                </li> -->
+                <% } else { %>
+                    <li>
+                        <a class="nav-link" href="/signup" data-toggle="tooltip" data-placement="bottom"
+                            title="Register"><i class="fad fa-user-plus"></i></a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/login" data-toggle="tooltip" data-placement="bottom" title="Login"><i
+                                class="fas fa-sign-in-alt"></i></a>
+                    </li>
+                    <% } %>
+        </ul>
+    </div>
+    </div>
+</nav>

@@ -1,0 +1,7 @@
+node_modules
+config/default.json
+.cache
+public/files
+public/images
+public/nots
+

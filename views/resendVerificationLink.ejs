@@ -1,0 +1,32 @@
+<%- include('head'); %>
+    <section class="email-verify">
+
+        <div class="row justify-content-center align-items-center">
+            <div class="card shadow" style="width: 400px">
+                <div class="card-body">
+                    <a class="text-center" href="/">
+                        <h3><i class="fad fa-users-class"></i> Virtual Classroom</h3>
+                    </a>
+                    <hr>
+                    <h2 class="form-title">Account Verification</h2>
+                    <form class="verify-link">
+                        <div class="form-group">
+                            <label for="email"><i class="fa fa-envelope"></i></label>
+                            <input id="email" type="email" name="email" placeholder="Enter Your Email" required
+                                autofocus>
+                        </div>
+                        <p class="form-text text-muted">
+                            By clicking "submit" we will send you a email verification link on your email.
+                        </p>
+
+                        <div class="form-group m-0">
+                            <button type="submit" class="btn btn-primary btn-block">
+                                Submit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </section>
+    <!-- include footer-->
+    <%- include('footer'); %>
